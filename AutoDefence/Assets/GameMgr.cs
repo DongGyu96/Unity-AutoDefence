@@ -1,12 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameMgr : MonoBehaviour
 {
     private static GameMgr instance = null;
 
-    private int stage = 0;
+    private int iStage = 0;
+    private bool bStageStart = false;
+
+    public Text moneyText;
+    public int money;
 
     void Awake()
     {
@@ -15,6 +20,8 @@ public class GameMgr : MonoBehaviour
             instance = this;
 
             InitGame();
+
+            moneyText.text = money.ToString();
 
             // 씬 전환이 되더라도 파괴되지 않게 한다.
             // gameObject만으로도 이 스크립트가 컴포넌트로서 붙어있는 Hierarchy상의 게임오브젝트라는 뜻이지만, 
@@ -27,6 +34,11 @@ public class GameMgr : MonoBehaviour
             //그래서 이미 전역변수인 instance에 인스턴스가 존재한다면 자신(새로운 씬의 GameMgr)을 삭제해준다.
             Destroy(this.gameObject);
         }
+    }
+
+    public bool GetStart()
+    {
+        return bStageStart;
     }
 
     public static GameMgr Instance
@@ -48,9 +60,9 @@ public class GameMgr : MonoBehaviour
 
     void StartStage()
     {
-        if(stage > 0)
+        if(iStage > 0)
         {
-            EnemySpawner.Instance.Spawn(stage);
+            EnemySpawner.Instance.Spawn(iStage);
         }
     }
 
