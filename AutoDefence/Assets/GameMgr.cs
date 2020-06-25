@@ -6,7 +6,7 @@ public class GameMgr : MonoBehaviour
 {
     private static GameMgr instance = null;
 
-    private int stage = 1;
+    private int stage = 0;
 
     void Awake()
     {
@@ -48,7 +48,10 @@ public class GameMgr : MonoBehaviour
 
     void StartStage()
     {
-        EnemySpawner.Instance.Spawn(stage);
+        if(stage > 0)
+        {
+            EnemySpawner.Instance.Spawn(stage);
+        }
     }
 
     // Start is called before the first frame update
