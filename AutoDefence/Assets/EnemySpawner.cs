@@ -8,6 +8,11 @@ public class EnemySpawner : MonoBehaviour
 
     public GameObject enemy;
 
+    [Min(0.1f)]
+    public float spawnInterval;
+    private int count = 0;
+    private bool test = true;
+
     void Awake()
     {
         if (null == instance)
@@ -50,6 +55,7 @@ public class EnemySpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        StartCoroutine(TestSpawn());
         
     }
 
@@ -57,5 +63,26 @@ public class EnemySpawner : MonoBehaviour
     void Update()
     {
         
+    }
+
+    IEnumerator TestSpawn()
+    {
+        Debug.Log("Routine");
+        yield return new WaitForSeconds(1f);
+
+        while(test)
+        {
+            Debug.Log("Spawn");
+            for (int i = 0; i < 5; ++i)
+            {
+                Instantiate(enemy, new Vector3(0f + (30f * i), 1f, 300f), Quaternion.identity);
+            }
+            count++;
+            if(count == 5)
+            {
+                test = false;
+            }
+            yield return new WaitForSeconds(1f);
+        }
     }
 }

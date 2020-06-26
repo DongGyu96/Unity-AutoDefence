@@ -55,7 +55,7 @@ public class GameMgr : MonoBehaviour
 
     void InitGame()
     {
-        StartStage();
+        //StartStage();
     }
 
     void StartStage()
