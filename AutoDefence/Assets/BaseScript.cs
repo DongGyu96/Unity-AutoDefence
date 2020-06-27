@@ -11,7 +11,7 @@ public class BaseScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        hpText.text = hp.ToString();
+        hpText.text = "HP : " + hp.ToString();
     }
 
     // Update is called once per frame
@@ -20,9 +20,19 @@ public class BaseScript : MonoBehaviour
         
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Enemy")
+        {
+            DecreaseHP();
+            Destroy(collision.gameObject);
+        }
+    }
+
     public void DecreaseHP(int amount = -1)
     {
         hp += amount;
+        hpText.text = "HP : " + hp.ToString();
     }
 
     public int GetHP()

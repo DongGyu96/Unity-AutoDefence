@@ -46,6 +46,8 @@ public class EnemySpawner : MonoBehaviour
 
     public void Spawn(int stage)
     {
+        test = true;
+        count = 0;
         StartCoroutine(TestSpawn(stage));
     }
 
@@ -67,19 +69,19 @@ public class EnemySpawner : MonoBehaviour
         Debug.Log("Routine");
         yield return new WaitForSeconds(1f);
 
-        while(test)
+        while (test)
         {
             Debug.Log("Spawn");
             for (int i = 0; i < 5; ++i)
             {
-                Instantiate(enemy, new Vector3(0f + (15f * i), 18f, 300f), Quaternion.identity);
+                Instantiate(enemy, new Vector3(0f + (15f * i), 5f, 300f), Quaternion.identity);
             }
             count++;
             if(count >= stage)
             {
                 test = false;
             }
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(2.5f);
         }
     }
 }

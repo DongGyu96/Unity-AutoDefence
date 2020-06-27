@@ -17,6 +17,10 @@ public class GameMgr : MonoBehaviour
     [SerializeField] private GameObject baseObj;
 
     private GameObject[] defenceObject = new GameObject[12];
+    private GameObject[] enemyObject;
+
+    private float checkCoolTime;
+    private float MAX_CHECK_COOLTIME = 3f;
 
     void Awake()
     {
@@ -44,6 +48,11 @@ public class GameMgr : MonoBehaviour
         return stageStart;
     }
 
+    public int GetStage()
+    {
+        return iStage;
+    }
+
     public static GameMgr Instance
     {
         get
@@ -59,16 +68,37 @@ public class GameMgr : MonoBehaviour
     void InitGame()
     {
         moneyText.text = money.ToString();
+        checkCoolTime = MAX_CHECK_COOLTIME;
     }
 
     public void StartStage()
     {
         if (stageStart == false)
         {
-
+            checkCoolTime = MAX_CHECK_COOLTIME + 6f;
+            positionObject.SetActive(false);
             stageStart = true;
             iStage++;
             EnemySpawner.Instance.Spawn(iStage);
+        }
+    }
+
+    public void FinishStage()
+    {
+        positionObject.SetActive(true);
+
+        stageStart = false;
+
+        for (int i = 0; i < 12; ++i)
+        {
+            if (defenceObject[i] != null)
+            {
+                defenceObject[i].SetActive(true);
+                Vector3 vPos = positionObject.transform.GetChild(i).transform.position;
+                vPos.y += 6f;
+                defenceObject[i].transform.position = vPos;
+                defenceObject[i].GetComponent<DefenceUnit>().ResetObject();
+            }
         }
     }
 
@@ -79,9 +109,8 @@ public class GameMgr : MonoBehaviour
             if(defenceObject[i] == null)
             {
                 Vector3 vPos = positionObject.transform.GetChild(i).transform.position;
-                vPos.y += 5f;
-                Instantiate(obj, vPos, Quaternion.identity);
-                defenceObject[i] = obj;
+                vPos.y += 6f;
+                defenceObject[i] = Instantiate(obj, vPos, Quaternion.identity);
                 return true;
             }
         }
@@ -97,6 +126,27 @@ public class GameMgr : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(stageStart)
+        {
+            checkCoolTime -= Time.deltaTime;
+            if (checkCoolTime < 0f)
+            {
+                if(CheckEnemyObject())
+                {
+                    FinishStage();
+                }
+                checkCoolTime = MAX_CHECK_COOLTIME;
+            }
+        }
+    }
 
+    bool CheckEnemyObject()
+    {
+        enemyObject = GameObject.FindGameObjectsWithTag("Enemy");
+
+        if(enemyObject.Length > 0)
+            return false;
+
+        return true;
     }
 }
