@@ -46,16 +46,13 @@ public class EnemySpawner : MonoBehaviour
 
     public void Spawn(int stage)
     {
-        for(int i = 0; i < 5; ++i)
-        {
-            Instantiate(enemy, new Vector3(0f + (30f * i), 1f, 300f), Quaternion.identity);
-        }
+        StartCoroutine(TestSpawn(stage));
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(TestSpawn());
+
         
     }
 
@@ -65,7 +62,7 @@ public class EnemySpawner : MonoBehaviour
         
     }
 
-    IEnumerator TestSpawn()
+    IEnumerator TestSpawn(int stage)
     {
         Debug.Log("Routine");
         yield return new WaitForSeconds(1f);
@@ -75,14 +72,14 @@ public class EnemySpawner : MonoBehaviour
             Debug.Log("Spawn");
             for (int i = 0; i < 5; ++i)
             {
-                Instantiate(enemy, new Vector3(0f + (30f * i), 1f, 300f), Quaternion.identity);
+                Instantiate(enemy, new Vector3(0f + (15f * i), 18f, 300f), Quaternion.identity);
             }
             count++;
-            if(count == 5)
+            if(count >= stage)
             {
                 test = false;
             }
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(3f);
         }
     }
 }

@@ -18,10 +18,13 @@ public class Stuff : MonoBehaviour, IPointerClickHandler
 {
     private GameObject ImageObj;
     private GameObject NameObj;
+    private int type;
 
     private bool bActive;
 
     public Sprite[] ObjSprite;
+
+    public GameObject[] ObjPrefeb;
 
     // Start is called before the first frame update
     void Start()
@@ -29,8 +32,9 @@ public class Stuff : MonoBehaviour, IPointerClickHandler
         ImageObj = transform.Find("StuffImage").gameObject;
         NameObj = transform.Find("StuffName").gameObject;
 
-        int type = Random.Range(0, ObjSprite.Length);
+        type = Random.Range(0, ObjSprite.Length);
         ImageObj.GetComponent<Image>().sprite = ObjSprite[type];
+        NameObj.GetComponent<Text>().text = ObjPrefeb[type].name;
 
         bActive = true;
     }
@@ -43,8 +47,9 @@ public class Stuff : MonoBehaviour, IPointerClickHandler
 
     public void Refresh()
     {
-        int type = Random.Range(0, ObjSprite.Length);
+        type = Random.Range(0, ObjSprite.Length);
         ImageObj.GetComponent<Image>().sprite = ObjSprite[type];
+        NameObj.GetComponent<Text>().text = ObjPrefeb[type].name;
 
         ImageObj.SetActive(true);
         NameObj.SetActive(true);
@@ -58,8 +63,13 @@ public class Stuff : MonoBehaviour, IPointerClickHandler
         {
             //Debug.Log("Mouse Click Button : Left");
             // 캐릭터 선택
+            if (GameMgr.Instance.GetStart())
+                return;
 
             if (!bActive)
+                return;
+
+            if (!GameMgr.Instance.SpawnUnit(ObjPrefeb[type]))
                 return;
 
             ImageObj.SetActive(false);

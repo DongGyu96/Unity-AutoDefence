@@ -7,21 +7,24 @@ public class GameMgr : MonoBehaviour
 {
     private static GameMgr instance = null;
 
-    private int iStage = 0;
-    private bool bStageStart = false;
+    [SerializeField] private int iStage = 0;
+    [SerializeField] private bool stageStart;
 
-    public Text moneyText;
-    public int money;
+    [SerializeField] private Text moneyText;
+    [SerializeField] private int money;
+    [SerializeField] private GameObject positionObject;
+
+    [SerializeField] private GameObject baseObj;
+
+    private GameObject[] defenceObject = new GameObject[12];
 
     void Awake()
     {
-        if(null == instance)
+        if (null == instance)
         {
             instance = this;
 
             InitGame();
-
-            moneyText.text = money.ToString();
 
             // 씬 전환이 되더라도 파괴되지 않게 한다.
             // gameObject만으로도 이 스크립트가 컴포넌트로서 붙어있는 Hierarchy상의 게임오브젝트라는 뜻이지만, 
@@ -38,7 +41,7 @@ public class GameMgr : MonoBehaviour
 
     public bool GetStart()
     {
-        return bStageStart;
+        return stageStart;
     }
 
     public static GameMgr Instance
@@ -55,15 +58,34 @@ public class GameMgr : MonoBehaviour
 
     void InitGame()
     {
-        //StartStage();
+        moneyText.text = money.ToString();
     }
 
-    void StartStage()
+    public void StartStage()
     {
-        if(iStage > 0)
+        if (stageStart == false)
         {
+
+            stageStart = true;
+            iStage++;
             EnemySpawner.Instance.Spawn(iStage);
         }
+    }
+
+    public bool SpawnUnit(GameObject obj)
+    {
+        for(int i = 0; i < 12; ++i)
+        {
+            if(defenceObject[i] == null)
+            {
+                Vector3 vPos = positionObject.transform.GetChild(i).transform.position;
+                vPos.y += 5f;
+                Instantiate(obj, vPos, Quaternion.identity);
+                defenceObject[i] = obj;
+                return true;
+            }
+        }
+        return false;
     }
 
     // Start is called before the first frame update
@@ -75,6 +97,6 @@ public class GameMgr : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

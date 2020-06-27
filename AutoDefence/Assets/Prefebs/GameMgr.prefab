@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3563951169796051217}
   - component: {fileID: 3563951169796051216}
   m_Layer: 0
-  m_Name: GameMgr 1
+  m_Name: GameMgr
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,5 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52cbd7b6b19a0fc428fd4864a627613a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moneyText: {fileID: 0}
+  iStage: 0
+  stageStart: 0
+  moneyText: {fileID: 5096914269501815631, guid: 9b6c2a40f3a3eb24ab7bc5f0f36f1bfc,
+    type: 3}
   money: 100
+  positionObject: {fileID: 504871223232014970, guid: 73b773f0581082742b62c51d342608f0,
+    type: 3}
+  baseObj: {fileID: 296762353314577634, guid: d717bb9ba439acb44a37944512e2fbe4, type: 3}
