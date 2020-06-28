@@ -2457,11 +2457,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 812699fd0d5d9114e82edc25f22f910f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 80
-  speed: 30
-  damage: 10
-  attackDist: 500
-  maxattackCoolTime: 1
+  hpBar: {fileID: 1445597681672895662, guid: 8cc6291984f8da74ab36c6ad0f5e73aa, type: 3}
+  mpBar: {fileID: 5699031202455420797, guid: 03184e292436f3948bdddd44be5a2032, type: 3}
+  hp: 160
+  speed: 20
+  damage: 100
+  attackDist: 400
+  maxAttackCoolTime: 1.6
+  objectType: 1
+  bullet: {fileID: 8132223492818411131, guid: e66f6600fcbdda34fa9fee95bbe67940, type: 3}
+  bulletSpeed: 150
+  shock: 1
+  mp: 100
+  skillType: 0
 --- !u!54 &1810348450408985488
 Rigidbody:
   m_ObjectHideFlags: 0

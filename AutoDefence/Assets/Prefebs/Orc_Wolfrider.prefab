@@ -684,8 +684,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f0d859df9378f4e9309bf1d85dc37c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hpBar: {fileID: 1445597681672895662, guid: 8cc6291984f8da74ab36c6ad0f5e73aa, type: 3}
   hp: 100
-  speed: 30
+  speed: 40
   damage: 10
   attackDist: 200
   maxAttackCoolTime: 1
@@ -700,7 +701,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.1, y: 1.2, z: 1.4}
+  m_Size: {x: 1.1, y: 1.8, z: 1.6}
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!54 &7884024943236595677
 Rigidbody:

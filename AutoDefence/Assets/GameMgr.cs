@@ -7,14 +7,19 @@ public class GameMgr : MonoBehaviour
 {
     private static GameMgr instance = null;
 
+    [Header("Start Stage Number")]
     [SerializeField] private int iStage = 0;
-    [SerializeField] private bool stageStart;
+    private bool stageStart;
 
+    [Header("UI Object")]
     [SerializeField] private Text moneyText;
     [SerializeField] private int money;
-    [SerializeField] private GameObject positionObject;
+    [SerializeField] private GameObject shop;
 
+    [Header("InGame Object")]
+    [SerializeField] private GameObject positionObject;
     [SerializeField] private GameObject baseObj;
+
 
     private GameObject[] defenceObject = new GameObject[12];
     private GameObject[] enemyObject;
@@ -98,7 +103,16 @@ public class GameMgr : MonoBehaviour
                 vPos.y += 6f;
                 defenceObject[i].transform.position = vPos;
                 defenceObject[i].GetComponent<DefenceUnit>().ResetObject();
+                defenceObject[i].GetComponent<DefenceUnit>().UIActive(true);
             }
+        }
+
+        shop.GetComponent<ShopScript>().Refresh();
+
+        GameObject[] trashObject = GameObject.FindGameObjectsWithTag("Effect");
+        for(int i = 0; i < trashObject.Length; ++i)
+        {
+            Destroy(trashObject[i]);
         }
     }
 

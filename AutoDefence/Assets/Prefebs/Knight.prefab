@@ -2162,11 +2162,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 812699fd0d5d9114e82edc25f22f910f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
+  hpBar: {fileID: 1445597681672895662, guid: 8cc6291984f8da74ab36c6ad0f5e73aa, type: 3}
+  mpBar: {fileID: 5699031202455420797, guid: 03184e292436f3948bdddd44be5a2032, type: 3}
+  hp: 500
   speed: 40
-  damage: 10
+  damage: 20
   attackDist: 200
-  maxattackCoolTime: 1
+  maxAttackCoolTime: 1
+  objectType: 0
+  bullet: {fileID: 0}
+  bulletSpeed: 0
+  shock: 1
+  attackParticle: {fileID: 7089356874089007218, guid: ecd219312f5e2864088709c69c79c1ef,
+    type: 3}
+  mp: 100
+  skillType: 0
 --- !u!54 &7926209399344324734
 Rigidbody:
   m_ObjectHideFlags: 0

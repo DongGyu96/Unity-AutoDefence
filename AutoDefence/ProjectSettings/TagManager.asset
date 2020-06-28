@@ -8,6 +8,8 @@ TagManager:
   - Friendly
   - Enemy
   - Base
+  - Bullet
+  - Effect
   layers:
   - Default
   - TransparentFX
@@ -20,8 +22,8 @@ TagManager:
   - Enemy
   - Friendly
   - Base
-  - 
-  - 
+  - Bullet
+  - Effect
   - 
   - 
   - 
