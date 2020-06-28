@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
+    [SerializeField] private GameObject effectParticle;
+
     private GameObject targetObject;
     private float speed;
     private float damage;
@@ -53,8 +55,11 @@ public class BulletScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            Destroy(gameObject);
+            Instantiate(effectParticle, transform.position, effectParticle.transform.rotation);
+
             collision.gameObject.GetComponent<Enemy>().Damage(damage, shock);
+
+            Destroy(gameObject);
         }
     }
 }

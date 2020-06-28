@@ -21,4 +21,9 @@ public class ParticleEffectScript : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public void SetLifeTime(float time)
+    {
+        lifeTime = time;
+    }
 }

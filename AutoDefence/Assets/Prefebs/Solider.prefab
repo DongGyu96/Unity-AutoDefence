@@ -728,7 +728,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 812699fd0d5d9114e82edc25f22f910f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpBar: {fileID: 1445597681672895662, guid: 8cc6291984f8da74ab36c6ad0f5e73aa, type: 3}
+  hpBar: {fileID: 1083753978733545324, guid: c01549c981342654a912dcb699e7e649, type: 3}
   mpBar: {fileID: 5699031202455420797, guid: 03184e292436f3948bdddd44be5a2032, type: 3}
   hp: 110
   speed: 30
@@ -739,8 +739,13 @@ MonoBehaviour:
   bullet: {fileID: 9040999417107311565, guid: 7ce1999b9f47d234a9f2d7872e351480, type: 3}
   bulletSpeed: 500
   shock: 1
+  attackParticle: {fileID: 657475255441682315, guid: 21a7e5b58e06bf24286dac797dc56941,
+    type: 3}
   mp: 100
-  skillType: 0
+  skillType: 2
+  skillEffect: {fileID: 6396325133854592978, guid: 2fd44ec0410768748b9554fab53c60a4,
+    type: 3}
+  skillDurationTime: 3
 --- !u!54 &4382837716898144530
 Rigidbody:
   m_ObjectHideFlags: 0

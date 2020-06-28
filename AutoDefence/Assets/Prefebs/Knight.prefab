@@ -2162,9 +2162,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 812699fd0d5d9114e82edc25f22f910f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpBar: {fileID: 1445597681672895662, guid: 8cc6291984f8da74ab36c6ad0f5e73aa, type: 3}
+  hpBar: {fileID: 1083753978733545324, guid: c01549c981342654a912dcb699e7e649, type: 3}
   mpBar: {fileID: 5699031202455420797, guid: 03184e292436f3948bdddd44be5a2032, type: 3}
-  hp: 500
+  hp: 400
   speed: 40
   damage: 20
   attackDist: 200
@@ -2175,8 +2175,12 @@ MonoBehaviour:
   shock: 1
   attackParticle: {fileID: 7089356874089007218, guid: ecd219312f5e2864088709c69c79c1ef,
     type: 3}
-  mp: 100
+  mp: 60
   skillType: 0
+  skillEffect: {fileID: 7174821650685280654, guid: 2ed72f5704a4d124a9b40215d5340b3e,
+    type: 3}
+  skillDurationTime: 0.8
+  skillObject: {fileID: 0}
 --- !u!54 &7926209399344324734
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -6,7 +6,11 @@ using UnityEngine.UI;
 
 public enum SKILL_TYPE
 {
-    NONE
+    HEAL,
+    POWERUP_SPEED,
+    POWERUP_DAMAGE,
+    SNIPE,
+    BOMB,
 };
 
 public enum UINT_TYPE
@@ -39,6 +43,11 @@ public class DefenceUnit : MonoBehaviour
     [Header("Skill Status")]
     [SerializeField] private float mp;
     [SerializeField] private SKILL_TYPE skillType;
+    [SerializeField] private GameObject skillEffect;
+    [SerializeField] private float skillDurationTime;
+    [SerializeField] private GameObject skillObject;
+    private bool skillOn;
+    private float skillRemainTime;
 
     private float remainMp;
     private float remainHp;
@@ -78,6 +87,8 @@ public class DefenceUnit : MonoBehaviour
         if (!GameMgr.Instance.GetStart())
             return;
 
+        UpdateSkill();
+
         targetResetCoolTime -= Time.deltaTime;
         attackCoolTime -= Time.deltaTime;
         if (targetResetCoolTime < 0f)
@@ -116,12 +127,13 @@ public class DefenceUnit : MonoBehaviour
                                 obj.GetComponent<BulletScript>().SetTarget(enemyObject[i]);
                                 obj.GetComponent<BulletScript>().SetStatus(bulletSpeed, damage, shock);
                                 attackCoolTime = maxAttackCoolTime;
+                                Instantiate(attackParticle, vPos, transform.rotation);
                             }
                             remainMp += 10f;
                             if(remainMp > mp)
                             {
                                 remainMp = 0;
-                                Debug.Log("Skill !");
+                                ActiveSkill();
                             }
                         }
                     }
@@ -177,6 +189,8 @@ public class DefenceUnit : MonoBehaviour
         remainMp = 0;
         attackCoolTime = maxAttackCoolTime;
         targetResetCoolTime = MAX_TARGET_RESET_COOLTIME;
+        skillRemainTime = skillDurationTime;
+        skillOn = false;
     }
 
     void SetTargetUnit()
@@ -209,5 +223,29 @@ public class DefenceUnit : MonoBehaviour
         vDir.Normalize();
         Vector3 vLook = Vector3.Slerp(transform.forward, vDir, Time.deltaTime);
         transform.rotation = Quaternion.LookRotation(vLook);
+    }
+
+    void ActiveSkill()
+    {
+        if(skillType == SKILL_TYPE.HEAL)
+        {
+            GameObject effect = Instantiate(skillEffect, transform.position, skillEffect.transform.rotation);
+            effect.GetComponent<ParticleEffectScript>().SetLifeTime(skillDurationTime);
+            remainHp += 100f;
+            if (remainHp > hp)
+                remainHp = hp;
+            skillRemainTime = skillDurationTime;
+            skillOn = true;
+        }
+    }
+
+    void UpdateSkill()
+    {
+        if (!skillOn)
+            return;
+
+        skillRemainTime -= Time.deltaTime;
+        if (skillRemainTime < 0f)
+            skillOn = false;
     }
 }

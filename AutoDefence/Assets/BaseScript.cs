@@ -25,7 +25,7 @@ public class BaseScript : MonoBehaviour
         if(collision.gameObject.tag == "Enemy")
         {
             DecreaseHP();
-            Destroy(collision.gameObject);
+            collision.gameObject.GetComponent<Enemy>().Damage(9999f);
         }
     }
 
