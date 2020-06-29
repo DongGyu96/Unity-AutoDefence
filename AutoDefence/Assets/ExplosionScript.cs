@@ -4,18 +4,25 @@ using UnityEngine;
 
 public class ExplosionScript : MonoBehaviour
 {
-    private float damage;
+    [SerializeField] private GameObject explosionEffect;
+    [SerializeField] private float damage;
+
+    private float lifeTime = 1f;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Instantiate(explosionEffect, transform.position, Quaternion.identity);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        lifeTime -= Time.deltaTime;
+        if(lifeTime < 0f)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void SetStatus(float damage)

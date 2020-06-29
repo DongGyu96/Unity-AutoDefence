@@ -6,10 +6,11 @@ public class EnemySpawner : MonoBehaviour
 {
     private static EnemySpawner instance = null;
 
-    public GameObject enemy;
+    [SerializeField] private GameObject enemy;
+    [SerializeField] private GameObject boss;
 
     [Min(0.1f)]
-    public float spawnInterval;
+    [SerializeField] private float spawnInterval;
     private int count = 0;
     private bool test = true;
 
@@ -66,15 +67,20 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator TestSpawn(int stage)
     {
-        Debug.Log("Routine");
         yield return new WaitForSeconds(1f);
 
         while (test)
         {
-            Debug.Log("Spawn");
-            for (int i = 0; i < 5; ++i)
+            if((count + 1) % 10 == 0)
             {
-                Instantiate(enemy, new Vector3(0f + (15f * i), 5f, 300f), Quaternion.identity);
+                Instantiate(boss, new Vector3(0f + (20f * 2), 5f, 300f), Quaternion.identity);
+            }
+            else
+            {
+                for (int i = 0; i < 6; ++i)
+                {
+                    Instantiate(enemy, new Vector3(0f + (20f * i), 5f, 300f), Quaternion.identity);
+                }
             }
             count++;
             if(count >= stage)

@@ -4,6 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum ENEMY_TYPE
+{
+    NORMAL,
+    BOSS,
+}
+
 public class Enemy : MonoBehaviour
 {
     private GameObject mainTarget;
@@ -12,6 +18,7 @@ public class Enemy : MonoBehaviour
     // [SerializeField] private GameObject mpBar;
 
     [Header("Enemy Status")]
+    [SerializeField] private ENEMY_TYPE enemyType = ENEMY_TYPE.NORMAL;
     [SerializeField] private float hp;
     [SerializeField] private float speed;
     [SerializeField] private float damage;
@@ -20,13 +27,23 @@ public class Enemy : MonoBehaviour
     private float attackCoolTime;
     private float remainHp;
 
+    [Header("Base Damage")]
+    [SerializeField] private int baseDamage = 1;
+
     private float targetResetCoolTime;
     private float MAX_TARGET_RESET_COOLTIME = 1f;
+
+    private Animator animator;
+    [SerializeField] private float MAX_RUN_ANIMATION_TIME = 1f;
+    private float runAnimationTime;
 
     // Start is called before the first frame update
     void Start()
     {
         remainHp = hp;
+
+        animator = GetComponent<Animator>();
+        runAnimationTime = 0;
 
         transform.Rotate(new Vector3(0f, 180f, 0f));
         mainTarget = GameObject.FindWithTag("Base");
@@ -46,10 +63,12 @@ public class Enemy : MonoBehaviour
         if (hpBar != null)
         {
             Vector3 vPos = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 12f, 0f));
-            vPos.y += 4f;
+            vPos.y += 6f;
             hpBar = Instantiate(hpBar, vPos, Quaternion.identity);
             hpBar.transform.SetParent(GameObject.Find("Canvas").transform);
         }
+
+        animator.SetTrigger("Idle");
     }
 
     // Update is called once per frame
@@ -59,6 +78,8 @@ public class Enemy : MonoBehaviour
 
         attackCoolTime -= Time.deltaTime;
         targetResetCoolTime -= Time.deltaTime;
+        runAnimationTime -= Time.deltaTime;
+
         if(targetResetCoolTime < 0f)
         {
             targetResetCoolTime = MAX_TARGET_RESET_COOLTIME;
@@ -77,6 +98,7 @@ public class Enemy : MonoBehaviour
                         {
                             attackCoolTime = maxAttackCoolTime;
                             friendlyUnits[i].GetComponent<DefenceUnit>().Damage(damage);
+                            animator.SetTrigger("Shoot");
                         }
                     }
                     else
@@ -116,6 +138,12 @@ public class Enemy : MonoBehaviour
         Vector3 vLook = Vector3.Slerp(transform.forward, vDir, Time.deltaTime);
         transform.position += vDir * Time.deltaTime * speed;
         transform.rotation = Quaternion.LookRotation(vLook);
+
+        if(runAnimationTime < 0f)
+        {
+            animator.SetTrigger("Run");
+            runAnimationTime = MAX_RUN_ANIMATION_TIME;
+        }
     }
 
     public void Damage(float damage, bool shock = false)
@@ -148,9 +176,14 @@ public class Enemy : MonoBehaviour
         if (hpBar == null)
             return;
 
-        Vector3 vPos = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 12f, 0f));
-        vPos.y += 4f;
+        Vector3 vPos = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, transform.localScale.y * 2.4f, 0f));
+        vPos.y += transform.localScale.y;
         hpBar.transform.position = vPos;
         hpBar.GetComponent<Slider>().value = remainHp / hp;
+    }
+
+    public int GetBaseDamage()
+    { 
+        return baseDamage;
     }
 }

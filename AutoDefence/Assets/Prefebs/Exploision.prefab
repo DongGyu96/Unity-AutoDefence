@@ -52,7 +52,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.85
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &619483246760310798
 MonoBehaviour:
@@ -66,3 +66,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e2434c5e5a63064da75a850bb3de95f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosionEffect: {fileID: 383634947362252802, guid: f1211f6788bf5a246927a69547414c36,
+    type: 3}
+  damage: 10

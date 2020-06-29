@@ -663,7 +663,7 @@ Animator:
   m_GameObject: {fileID: 9147869448128792184}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: d021512d6de402148a36d287d6cde611, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 292af9df960b1c64d9b17c7c465aff77, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -685,11 +685,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpBar: {fileID: 1445597681672895662, guid: 8cc6291984f8da74ab36c6ad0f5e73aa, type: 3}
+  enemyType: 0
   hp: 100
   speed: 40
   damage: 10
   attackDist: 200
   maxAttackCoolTime: 1
+  baseDamage: 1
+  MAX_RUN_ANIMATION_TIME: 1
 --- !u!65 &9112780959165887182
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -711,13 +714,13 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9147869448128792184}
   serializedVersion: 2
-  m_Mass: 150
+  m_Mass: 300
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 122
   m_CollisionDetection: 0
 --- !u!1 &9147869448128793518
 GameObject:

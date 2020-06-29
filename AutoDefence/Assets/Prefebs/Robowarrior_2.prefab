@@ -2436,7 +2436,7 @@ Animator:
   m_GameObject: {fileID: 6887605040799697776}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 860793eb3324391468f1c120a75ec049, type: 3}
-  m_Controller: {fileID: 9100000, guid: 6defa2fea7e9a934a8d2cafa30dc567a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 68946f8dd42517a46a9ada3a276bb100, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2463,6 +2463,7 @@ MonoBehaviour:
   speed: 20
   damage: 100
   attackDist: 400
+  runDist: 1000
   maxAttackCoolTime: 1.6
   objectType: 1
   bullet: {fileID: 8132223492818411131, guid: e66f6600fcbdda34fa9fee95bbe67940, type: 3}
@@ -2470,11 +2471,14 @@ MonoBehaviour:
   shock: 1
   attackParticle: {fileID: 657475255441682315, guid: 21a7e5b58e06bf24286dac797dc56941,
     type: 3}
-  mp: 100
+  mp: 60
   skillType: 3
   skillEffect: {fileID: 6396325133854592978, guid: 2fd44ec0410768748b9554fab53c60a4,
     type: 3}
-  skillDurationTime: 0.3
+  skillValue: 30
+  skillDurationTime: 0.5
+  skillObject: {fileID: 168811496467064721, guid: e34df01a0c6ff9f45b00f72f2e5d764e,
+    type: 3}
 --- !u!54 &1810348450408985488
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2483,13 +2487,13 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6887605040799697776}
   serializedVersion: 2
-  m_Mass: 50
+  m_Mass: 220
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 122
   m_CollisionDetection: 0
 --- !u!65 &6986398633207565345
 BoxCollider:

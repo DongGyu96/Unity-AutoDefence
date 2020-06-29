@@ -44,10 +44,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iStage: 0
-  stageStart: 0
   moneyText: {fileID: 5096914269501815631, guid: 9b6c2a40f3a3eb24ab7bc5f0f36f1bfc,
     type: 3}
   money: 100
+  shop: {fileID: 3985037570714199309, guid: cd45df20a6c89fa4a9f6d96d798ccc1a, type: 3}
   positionObject: {fileID: 504871223232014970, guid: 73b773f0581082742b62c51d342608f0,
     type: 3}
   baseObj: {fileID: 296762353314577634, guid: d717bb9ba439acb44a37944512e2fbe4, type: 3}

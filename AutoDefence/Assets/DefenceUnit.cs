@@ -30,6 +30,7 @@ public class DefenceUnit : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float damage;
     [SerializeField] private float attackDist;
+    [SerializeField] private float runDist = 1000;
     [SerializeField] private float maxAttackCoolTime;
 
     [Header("Unit Type")]
@@ -44,8 +45,11 @@ public class DefenceUnit : MonoBehaviour
     [SerializeField] private float mp;
     [SerializeField] private SKILL_TYPE skillType;
     [SerializeField] private GameObject skillEffect;
+    [SerializeField] private float skillValue;
     [SerializeField] private float skillDurationTime;
     [SerializeField] private GameObject skillObject;
+    private bool activeSkillOn;
+    private int activeSkillCount;
     private bool skillOn;
     private float skillRemainTime;
 
@@ -57,9 +61,15 @@ public class DefenceUnit : MonoBehaviour
 
     private GameObject[] enemyObject;
 
+    private Animator animator;
+    private float MAX_RUN_ANIMATION_TIME = 1f;
+    private float runAnimationTime;
+
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
+
         ResetObject();
 
         if (mpBar != null)
@@ -91,6 +101,8 @@ public class DefenceUnit : MonoBehaviour
 
         targetResetCoolTime -= Time.deltaTime;
         attackCoolTime -= Time.deltaTime;
+        runAnimationTime -= Time.deltaTime;
+
         if (targetResetCoolTime < 0f)
         {
             targetResetCoolTime = MAX_TARGET_RESET_COOLTIME;
@@ -121,23 +133,26 @@ public class DefenceUnit : MonoBehaviour
                             {
                                 LookToTarget(enemyObject[i]);
                                 Vector3 vPos = transform.position;
-                                vPos.y += 6f;
-                                vPos.z += 5f;
+                                vPos.y += 7.5f;
+                                vPos.z += 6.5f;
                                 GameObject obj = Instantiate(bullet, vPos, bullet.transform.rotation);
                                 obj.GetComponent<BulletScript>().SetTarget(enemyObject[i]);
                                 obj.GetComponent<BulletScript>().SetStatus(bulletSpeed, damage, shock);
                                 attackCoolTime = maxAttackCoolTime;
                                 Instantiate(attackParticle, vPos, transform.rotation);
                             }
-                            remainMp += 10f;
-                            if(remainMp > mp)
+                            if(!skillOn)
+                                remainMp += 10f;
+
+                            if(remainMp >= mp)
                             {
                                 remainMp = 0;
                                 ActiveSkill();
                             }
+                            animator.SetTrigger("Shoot");
                         }
                     }
-                    else if (dist < 60f)
+                    else if (dist < runDist / 10f)
                     {
                         MoveToTarget(enemyObject[i]);
                     }
@@ -185,10 +200,12 @@ public class DefenceUnit : MonoBehaviour
 
     public void ResetObject()
     {
+        animator.SetTrigger("Idle");
         remainHp = hp;
-        remainMp = 0;
+        // remainMp = 0;
         attackCoolTime = maxAttackCoolTime;
         targetResetCoolTime = MAX_TARGET_RESET_COOLTIME;
+        runAnimationTime = MAX_RUN_ANIMATION_TIME;
         skillRemainTime = skillDurationTime;
         skillOn = false;
     }
@@ -215,6 +232,12 @@ public class DefenceUnit : MonoBehaviour
         Vector3 vLook = Vector3.Slerp(transform.forward, vDir, Time.deltaTime);
         transform.position += vDir * Time.deltaTime * speed;
         transform.rotation = Quaternion.LookRotation(vLook);
+
+        if (runAnimationTime < 0f)
+        {
+            animator.SetTrigger("Run");
+            runAnimationTime = MAX_RUN_ANIMATION_TIME;
+        }
     }
 
     void LookToTarget(GameObject target)
@@ -227,15 +250,52 @@ public class DefenceUnit : MonoBehaviour
 
     void ActiveSkill()
     {
-        if(skillType == SKILL_TYPE.HEAL)
+        if (skillType == SKILL_TYPE.HEAL)
         {
             GameObject effect = Instantiate(skillEffect, transform.position, skillEffect.transform.rotation);
             effect.GetComponent<ParticleEffectScript>().SetLifeTime(skillDurationTime);
-            remainHp += 100f;
+            remainHp += skillValue;
             if (remainHp > hp)
                 remainHp = hp;
             skillRemainTime = skillDurationTime;
             skillOn = true;
+        }
+        else if (skillType == SKILL_TYPE.POWERUP_DAMAGE)
+        {
+            GameObject effect = Instantiate(skillEffect, transform.position, skillEffect.transform.rotation);
+            effect.GetComponent<ParticleEffectScript>().SetLifeTime(skillDurationTime);
+            damage *= skillValue;
+            skillRemainTime = skillDurationTime;
+            skillOn = true;
+        }
+        else if (skillType == SKILL_TYPE.POWERUP_SPEED)
+        {
+            GameObject effect = Instantiate(skillEffect, transform.position, skillEffect.transform.rotation);
+            effect.GetComponent<ParticleEffectScript>().SetLifeTime(skillDurationTime);
+            maxAttackCoolTime /= skillValue;
+            attackCoolTime = -1f;
+            skillRemainTime = skillDurationTime;
+            skillOn = true;
+        }
+        else if(skillType == SKILL_TYPE.SNIPE)
+        {
+            GameObject effect = Instantiate(skillEffect, transform.position, skillEffect.transform.rotation);
+            effect.GetComponent<ParticleEffectScript>().SetLifeTime(skillDurationTime);
+            skillRemainTime = skillDurationTime;
+            skillOn = true;
+            activeSkillCount = 0;
+            activeSkillOn = true;
+            StartCoroutine(ActiveSnipeSkill());
+        }
+        else if (skillType == SKILL_TYPE.BOMB)
+        {
+            GameObject effect = Instantiate(skillEffect, transform.position, skillEffect.transform.rotation);
+            effect.GetComponent<ParticleEffectScript>().SetLifeTime(skillDurationTime);
+            skillRemainTime = skillDurationTime;
+            skillOn = true;
+            activeSkillCount = 0;
+            activeSkillOn = true;
+            StartCoroutine(ActiveBombSkill());
         }
     }
 
@@ -246,6 +306,64 @@ public class DefenceUnit : MonoBehaviour
 
         skillRemainTime -= Time.deltaTime;
         if (skillRemainTime < 0f)
+        {
+            if (skillType == SKILL_TYPE.POWERUP_DAMAGE)
+            {
+                damage /= skillValue;
+            }
+            else if(skillType == SKILL_TYPE.POWERUP_SPEED)
+            {
+                maxAttackCoolTime *= skillValue;
+            }
             skillOn = false;
+        }
+        
+    }
+
+    IEnumerator ActiveSnipeSkill()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        while (activeSkillOn)
+        {
+            activeSkillCount++;
+            if (activeSkillCount >= 10)
+            {
+                activeSkillOn = false;
+                skillOn = false;
+            }
+
+            Vector3 vPos = transform.position;
+            vPos += transform.forward * (10f * activeSkillCount);
+            GameObject obj = Instantiate(skillObject, vPos, transform.rotation);
+            obj.GetComponent<ExplosionScript>().SetStatus(skillValue);
+
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    IEnumerator ActiveBombSkill()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        while (activeSkillOn)
+        {
+            activeSkillCount++;
+            if (activeSkillCount >= 20)
+            {
+                activeSkillOn = false;
+                skillOn = false;
+            }
+
+            Vector3 vPos = transform.position;
+            vPos.y += 200f;
+            vPos.z += UnityEngine.Random.Range(0, 90) - 10f;
+            vPos.x += UnityEngine.Random.Range(0, 90) - 10f;
+
+            GameObject obj = Instantiate(skillObject, vPos, transform.rotation);
+            obj.GetComponent<BombScript>().SetStatus(skillValue);
+
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 }
