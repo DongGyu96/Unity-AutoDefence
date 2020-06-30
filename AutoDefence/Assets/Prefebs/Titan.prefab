@@ -231,7 +231,7 @@ MonoBehaviour:
   damage: 115
   attackDist: 400
   maxAttackCoolTime: 1.8
-  baseDamage: 1
+  baseDamage: 5
   MAX_RUN_ANIMATION_TIME: 10
 --- !u!82 &8941713603674937492
 AudioSource:

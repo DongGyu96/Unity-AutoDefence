@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class BaseScript : MonoBehaviour
@@ -36,10 +37,15 @@ public class BaseScript : MonoBehaviour
         }
     }
 
-    public void DecreaseHP(int amount = -1)
+    public void DecreaseHP(int amount = 1)
     {
-        hp += amount;
+        hp -= 10;
         hpText.text = "HP : " + hp.ToString();
+        if(hp < 0)
+        {
+            GameMgr.Instance.DestoryAll();
+            SceneManager.LoadScene("TitleScene");
+        }
     }
 
     public int GetHP()
