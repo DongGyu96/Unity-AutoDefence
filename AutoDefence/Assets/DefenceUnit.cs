@@ -65,10 +65,13 @@ public class DefenceUnit : MonoBehaviour
     private float MAX_RUN_ANIMATION_TIME = 1f;
     private float runAnimationTime;
 
+    private AudioSource attackAudio;
+
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        attackAudio = GetComponent<AudioSource>();
 
         ResetObject();
 
@@ -141,7 +144,9 @@ public class DefenceUnit : MonoBehaviour
                                 attackCoolTime = maxAttackCoolTime;
                                 Instantiate(attackParticle, vPos, transform.rotation);
                             }
-                            if(!skillOn)
+                            PlaySound();
+
+                            if (!skillOn)
                                 remainMp += 10f;
 
                             if(remainMp >= mp)
@@ -190,6 +195,13 @@ public class DefenceUnit : MonoBehaviour
         }
     }
 
+    public void Remove()
+    {
+        Destroy(mpBar);
+        Destroy(hpBar);
+        Destroy(gameObject);
+    }
+
     public void UIActive(bool active)
     {
         if (hpBar != null)
@@ -229,7 +241,7 @@ public class DefenceUnit : MonoBehaviour
     {
         Vector3 vDir = target.transform.position - transform.position;
         vDir.Normalize();
-        Vector3 vLook = Vector3.Slerp(transform.forward, vDir, Time.deltaTime);
+        Vector3 vLook = Vector3.Slerp(transform.forward, vDir, 1f);
         transform.position += vDir * Time.deltaTime * speed;
         transform.rotation = Quaternion.LookRotation(vLook);
 
@@ -349,7 +361,7 @@ public class DefenceUnit : MonoBehaviour
         while (activeSkillOn)
         {
             activeSkillCount++;
-            if (activeSkillCount >= 20)
+            if (activeSkillCount >= 15)
             {
                 activeSkillOn = false;
                 skillOn = false;
@@ -357,13 +369,18 @@ public class DefenceUnit : MonoBehaviour
 
             Vector3 vPos = transform.position;
             vPos.y += 200f;
-            vPos.z += UnityEngine.Random.Range(0, 90) - 10f;
-            vPos.x += UnityEngine.Random.Range(0, 90) - 10f;
+            vPos.z += UnityEngine.Random.Range(0, 120) - 5f;
+            vPos.x += UnityEngine.Random.Range(0, 120) - 5f;
 
             GameObject obj = Instantiate(skillObject, vPos, transform.rotation);
             obj.GetComponent<BombScript>().SetStatus(skillValue);
 
             yield return new WaitForSeconds(0.1f);
         }
+    }
+
+    void PlaySound()
+    {
+        attackAudio.Play();
     }
 }

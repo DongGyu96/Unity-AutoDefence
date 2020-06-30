@@ -37,10 +37,15 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float MAX_RUN_ANIMATION_TIME = 1f;
     private float runAnimationTime;
 
+    private AudioSource attackAudio;
+
     // Start is called before the first frame update
     void Start()
     {
         remainHp = hp;
+
+        attackAudio = GetComponent<AudioSource>();
+
 
         animator = GetComponent<Animator>();
         runAnimationTime = 0;
@@ -99,7 +104,9 @@ public class Enemy : MonoBehaviour
                             attackCoolTime = maxAttackCoolTime;
                             friendlyUnits[i].GetComponent<DefenceUnit>().Damage(damage);
                             animator.SetTrigger("Shoot");
+                            PlaySound();
                         }
+
                     }
                     else
                     {
@@ -185,5 +192,10 @@ public class Enemy : MonoBehaviour
     public int GetBaseDamage()
     { 
         return baseDamage;
+    }
+
+    void PlaySound()
+    {
+        attackAudio.Play();
     }
 }

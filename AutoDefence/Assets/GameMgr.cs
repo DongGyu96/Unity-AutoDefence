@@ -27,6 +27,10 @@ public class GameMgr : MonoBehaviour
     private float checkCoolTime;
     private float MAX_CHECK_COOLTIME = 3f;
 
+    private bool drag = false;
+    private GameObject dragObject;
+    private int dragIndex;
+
     void Awake()
     {
         if (null == instance)
@@ -84,12 +88,25 @@ public class GameMgr : MonoBehaviour
             positionObject.SetActive(false);
             stageStart = true;
             iStage++;
+
+            for (int i = 0; i < 12; ++i)
+            {
+                if (defenceObject[i] != null)
+                {
+                    Vector3 vPos = positionObject.transform.GetChild(i).transform.position;
+                    vPos.y += 1f;
+                    defenceObject[i].transform.position = vPos;
+                }
+            }
+            GetComponent<AudioSource>().Play();
+
             EnemySpawner.Instance.Spawn(iStage);
         }
     }
 
     public void FinishStage()
     {
+        GetComponent<AudioSource>().Play();
         positionObject.SetActive(true);
 
         stageStart = false;
@@ -100,7 +117,7 @@ public class GameMgr : MonoBehaviour
             {
                 defenceObject[i].SetActive(true);
                 Vector3 vPos = positionObject.transform.GetChild(i).transform.position;
-                vPos.y += 6f;
+                vPos.y += 5f;
                 defenceObject[i].transform.position = vPos;
                 defenceObject[i].GetComponent<DefenceUnit>().ResetObject();
                 defenceObject[i].GetComponent<DefenceUnit>().UIActive(true);
@@ -123,7 +140,7 @@ public class GameMgr : MonoBehaviour
             if(defenceObject[i] == null)
             {
                 Vector3 vPos = positionObject.transform.GetChild(i).transform.position;
-                vPos.y += 6f;
+                vPos.y += 5f;
                 defenceObject[i] = Instantiate(obj, vPos, Quaternion.identity);
                 return true;
             }
@@ -152,6 +169,129 @@ public class GameMgr : MonoBehaviour
                 checkCoolTime = MAX_CHECK_COOLTIME;
             }
         }
+        else
+        {
+            if(Input.GetMouseButtonDown(0))
+            {
+                if(!drag)
+                {
+                    GameObject obj = GetClickObject();
+                    if (obj != null)
+                    {
+                        for (int i = 0; i < 12; ++i)
+                        {
+                            if (defenceObject[i] == null)
+                                continue;
+                            if (defenceObject[i].Equals(obj))
+                            {
+                                drag = true;
+                                dragObject = defenceObject[i];
+                                dragIndex = i;
+                                dragObject.layer = 2;
+                                RigidbodyActive(false);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            else if(Input.GetMouseButton(0))
+            {
+                if(drag)
+                {
+                    if (dragObject != null)
+                    {
+                        DragClickObject();
+                    }
+                }
+            }
+            else if(Input.GetMouseButtonUp(0))
+            {
+                if(drag)
+                {
+                    GameObject obj = GetClickObject();
+
+                    bool check = false;
+
+                    if (obj != null)
+                    {
+                        dragObject.layer = 9;
+                        for (int i = 0; i < 12; ++i)
+                        {
+                            if(defenceObject[i] != null)
+                            {
+                                if(defenceObject[i].Equals(obj))
+                                {
+                                    GameObject temp = defenceObject[i];
+                                    defenceObject[i] = defenceObject[dragIndex];
+                                    defenceObject[dragIndex] = temp;
+
+                                    if (defenceObject[i] != null)
+                                    {
+                                        Vector3 vPos = positionObject.transform.GetChild(i).transform.position;
+                                        vPos.y += 5f;
+                                        defenceObject[i].transform.position = vPos;
+                                    }
+                                    if (defenceObject[dragIndex] != null)
+                                    {
+                                        Vector3 vPos = positionObject.transform.GetChild(dragIndex).transform.position;
+                                        vPos.y += 5f;
+                                        defenceObject[dragIndex].transform.position = vPos;
+                                    }
+                                    check = true;
+                                    break;
+                                }
+                            }
+                            if (positionObject.transform.GetChild(i).gameObject.Equals(obj))
+                            {
+                                GameObject temp = defenceObject[i];
+                                defenceObject[i] = defenceObject[dragIndex];
+                                defenceObject[dragIndex] = temp;
+
+                                if(defenceObject[i] != null)
+                                {
+                                    Vector3 vPos = positionObject.transform.GetChild(i).transform.position;
+                                    vPos.y += 5f;
+                                    defenceObject[i].transform.position = vPos;
+                                }
+                                if(defenceObject[dragIndex] != null)
+                                {
+                                    Vector3 vPos = positionObject.transform.GetChild(dragIndex).transform.position;
+                                    vPos.y += 5f;
+                                    defenceObject[dragIndex].transform.position = vPos;
+                                }
+                                check = true;
+                                break;
+                            }
+                        }
+                        if(positionObject.transform.GetChild(12).gameObject.Equals(obj))
+                        {
+                            dragObject.GetComponent<DefenceUnit>().Remove();
+                            defenceObject[dragIndex] = null;
+                            check = true;
+                        }
+                    }
+                    if(check)
+                    {
+                        RigidbodyActive(true);
+                        drag = false;
+                        dragObject = null;
+                        dragIndex = -1;
+                    }
+                    else
+                    {
+                        Vector3 vPos = positionObject.transform.GetChild(dragIndex).transform.position;
+                        vPos.y += 5f;
+                        defenceObject[dragIndex].transform.position = vPos;
+
+                        RigidbodyActive(true);
+                        drag = false;
+                        dragObject = null;
+                        dragIndex = -1;
+                    }
+                }
+            }
+        }
     }
 
     bool CheckEnemyObject()
@@ -162,5 +302,41 @@ public class GameMgr : MonoBehaviour
             return false;
 
         return true;
+    }
+
+    private GameObject GetClickObject()
+    {
+        RaycastHit hit;
+        GameObject target = null;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if(Physics.Raycast(ray.origin, ray.direction*10, out hit))
+        {
+            target = hit.collider.gameObject;
+            Debug.Log("Click" + target.name);
+        }
+        return target;
+    }
+
+    private void DragClickObject()
+    {
+        RaycastHit hit;
+        GameObject target = null;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray.origin, ray.direction * 10, out hit))
+        {
+            target = hit.collider.gameObject;
+            dragObject.transform.position = hit.point;
+        }
+    }
+
+    private void RigidbodyActive(bool active)
+    {
+        for(int i=0;i<12;++i)
+        {
+            if(defenceObject[i] != null)
+            {
+                defenceObject[i].GetComponent<Rigidbody>().isKinematic = !active;
+            }
+        }
     }
 }

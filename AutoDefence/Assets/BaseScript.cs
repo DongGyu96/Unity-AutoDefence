@@ -8,16 +8,23 @@ public class BaseScript : MonoBehaviour
     [SerializeField] private int hp;
     [SerializeField] private Text hpText;
 
+    [SerializeField] private GameObject infoText;
+
     // Start is called before the first frame update
     void Start()
     {
         hpText.text = "HP : " + hp.ToString();
+
+        Vector3 vPos = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 12f, 0f));
+        infoText = Instantiate(infoText, vPos, Quaternion.identity);
+        infoText.transform.SetParent(GameObject.Find("Canvas").transform);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        Vector3 vPos = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 12f, 0f));
+        infoText.transform.position = vPos;
     }
 
     private void OnCollisionEnter(Collision collision)
