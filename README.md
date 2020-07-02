@@ -13,11 +13,11 @@
 스테이지가 끝날때 자동으로 새로고침이 이루어집니다.
 
 <h2>조작키</h2>
-카메라 움직임을 구현하여 마우스 우클릭후 마우스 움직임에 따라 카메라의 방향이 바뀌며
-wasd, 화살표 방향키 - 카메라 이동
-q, e - 카메라 높낮이
-마우스 휠 - 카메라 확대 축소
-백스페이스 - 카메라 원위치
+카메라 움직임을 구현하여 마우스 우클릭후 마우스 움직임에 따라 카메라의 방향이 바뀌며<br>
+wasd, 화살표 방향키 - 카메라 이동<br>
+q, e - 카메라 높낮이<br>
+마우스 휠 - 카메라 확대 축소<br>
+백스페이스 - 카메라 원위치<br>
 
 오브젝트를 클릭하면 화면의 좌측 상단에 해당 오브젝트의 정보가 표시되며
 스테이지 시작전에는 오브젝트를 드래그해서 위치를 바꿔줄 수 있으며
@@ -31,37 +31,37 @@ q, e - 카메라 높낮이
 방어 오브젝트들은 각각의 스킬이 하나씩 존재합니다.
 
 <h2>방어 오브젝트 종류</h2>
-Golem -
+Golem -<br>
 체력이 가장 높으나 이동속도나 공격력, 공격속도가 가장 낮아 적의 공격을 받아내는 용도로만
-활용이 가능합니다
-스킬 :  매 공격시 자신의 체력을 조금씩 회복합니다
+활용이 가능합니다<br>
+스킬 :  매 공격시 자신의 체력을 조금씩 회복합니다<br>
 
-Knight -
+Knight -<br>
 체력은 두번째로 높고 나머지 능력치는 무난한 편의 근접 유닛으로 적의 공격을 받아내며
-공격이 가능합니다
-스킬 : 자신의 체력을 크게 회복시킵니다.
+공격이 가능합니다<br>
+스킬 : 자신의 체력을 크게 회복시킵니다.<br>
 
-DogKnight -
+DogKnight -<br>
 체력은 조금 낮지만 공격속도가 빠르고 공격력이 강하고 사거리가 조금 길어 2선의 위치에서
-공격을 꾸준하게 해줄 수 있습니다.
-스킬 : 자신의 공격속도를 일정시간동안 큰 폭으로 증가시킵니다.
+공격을 꾸준하게 해줄 수 있습니다.<br>
+스킬 : 자신의 공격속도를 일정시간동안 큰 폭으로 증가시킵니다.<br>
 
-Solider - 
+Solider - <br>
 체력은 가장 낮지만 가장 넓은 공격 사거리와 강한 공격력으로 맨 뒤에서
-꾸준하게 적을 공격합니다
-스킬 : 자신의 공격력을 일정시간동안 큰 폭으로 증가시킵니다.
+꾸준하게 적을 공격합니다<br>
+스킬 : 자신의 공격력을 일정시간동안 큰 폭으로 증가시킵니다.<br>
 
-MachineGun -
-무난한 능력치와 가장 낮은 데미지, 가장 빠른 공격속도를 가지고있습니다.
-스킬 : 자신의 공격속도를 일정시간동안 증가시킵니다.
+MachineGun -<br>
+무난한 능력치와 가장 낮은 데미지, 가장 빠른 공격속도를 가지고있습니다.<br>
+스킬 : 자신의 공격속도를 일정시간동안 증가시킵니다.<br>
 
-Bazooka - 
-가장 높은 공격력과 가장 느린 공격속도를 가지고 어느정도 짧은 사거리를 가지고있습니다
-스킬 : 전방에 피해를 주는 폭발을 발사합니다.
+Bazooka - <br>
+가장 높은 공격력과 가장 느린 공격속도를 가지고 어느정도 짧은 사거리를 가지고있습니다<br>
+스킬 : 전방에 피해를 주는 폭발을 발사합니다.<br>
 
-BomberMan -
-가장 무난한 능력치를 가지고있는 원거리 유닛입니다
-스킬 : 자신 주변에 폭탄을 떨어트려 각각 피해를 줍니다.
+BomberMan -<br>
+가장 무난한 능력치를 가지고있는 원거리 유닛입니다<br>
+스킬 : 자신 주변에 폭탄을 떨어트려 각각 피해를 줍니다.<br>
 
 기획상으론 시너지효과를 넣으려고 했지만 무엇보다도 게임에 사용할 애니메이션이 있는
 모델링을 무료로 구하기가 너무 어려워서 7가지밖에 넣지 못했고 7가지로 어떻게
@@ -110,43 +110,43 @@ C#을 조금 익히고 사용했었습니다.
 
 <h1>사용한 에셋 출처</h1>
 
-적군 오브젝트 Titan
+적군 오브젝트 Titan<br>
 https://assetstore.unity.com/packages/3d/characters/creatures/creature-titan-79302
 
-Golem 모델 및 애니메이션
+Golem 모델 및 애니메이션<br>
 https://assetstore.unity.com/packages/3d/characters/humanoids/mini-legion-rock-golem-pbr-hp-polyart-94707
 
-DogKnight 모델 및 애니메이션
+DogKnight 모델 및 애니메이션<br>
 https://assetstore.unity.com/packages/3d/characters/animals/dog-knight-pbr-polyart-135227
 
-Knight 모델 및 애니메이션
+Knight 모델 및 애니메이션<br>
 https://assetstore.unity.com/packages/3d/characters/humanoids/fantasy-chess-rpg-character-arthur-160647
 
-폭발 모델링
+폭발 모델링<br>
 https://assetstore.unity.com/packages/tools/particles-effects/true-explosions-21893
 
-Frame UI ( Graphy )
+Frame UI ( Graphy )<br>
 https://assetstore.unity.com/packages/tools/gui/graphy-ultimate-fps-counter-stats-monitor-debugger-105778
 
-Title Menu UI
+Title Menu UI<br>
 https://assetstore.unity.com/packages/tools/gui/full-menu-system-free-158919
 
-UI Texture & Font
+UI Texture & Font<br>
 https://assetstore.unity.com/packages/2d/gui/modern-gui-skin-19561
 
-Map, Terrain
+Map, Terrain<br>
 https://assetstore.unity.com/packages/3d/environments/landscapes/rpg-poly-pack-lite-148410
 
-Solder 모델 및 애니메이션
+Solder 모델 및 애니메이션<br>
 https://assetstore.unity.com/packages/3d/characters/low-poly-soldiers-demo-73611
 
-Robowarrior 모델 및 애니메이션
+Robowarrior 모델 및 애니메이션<br>
 https://assetstore.unity.com/packages/3d/characters/robots/sci-fi-warrior-pbr-hp-polyart-106154
 
-Orc_Wolfrider 모델 및 애니메이션
+Orc_Wolfrider 모델 및 애니메이션<br>
 https://assetstore.unity.com/packages/3d/characters/humanoids/toon-rts-units-orcs-demo-101359
 
-skybox texture
+skybox texture<br>
 https://assetstore.unity.com/packages/2d/textures-materials/sky/free-hdr-sky-61217
 
 유니티 폴더 상에 임포트된 에셋은 조금 더 있지만 아예 사용하지 않아서 
