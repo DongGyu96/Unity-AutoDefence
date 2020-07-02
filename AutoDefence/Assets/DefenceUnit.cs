@@ -98,11 +98,11 @@ public class DefenceUnit : MonoBehaviour
     {
         UpdateUI();
 
+        UpdateSkill();
 
         if (!GameMgr.Instance.GetStart())
             return;
 
-        UpdateSkill();
 
         targetResetCoolTime -= Time.deltaTime;
         attackCoolTime -= Time.deltaTime;
@@ -191,6 +191,9 @@ public class DefenceUnit : MonoBehaviour
         remainHp -= damage;
         if(remainHp <= 0f)
         {
+            skillRemainTime = -1f;
+            UpdateSkill();
+
             this.gameObject.SetActive(false);
             mpBar.SetActive(false);
             hpBar.SetActive(false);
@@ -221,7 +224,6 @@ public class DefenceUnit : MonoBehaviour
         targetResetCoolTime = MAX_TARGET_RESET_COOLTIME;
         runAnimationTime = MAX_RUN_ANIMATION_TIME;
         skillRemainTime = skillDurationTime;
-        skillOn = false;
     }
 
     void SetTargetUnit()
@@ -372,7 +374,7 @@ public class DefenceUnit : MonoBehaviour
             Vector3 vPos = transform.position;
             vPos.y += 200f;
             vPos.z += UnityEngine.Random.Range(0, 120) - 5f;
-            vPos.x += UnityEngine.Random.Range(0, 120) - 5f;
+            vPos.x += UnityEngine.Random.Range(0, 120) - 60f;
 
             GameObject obj = Instantiate(skillObject, vPos, transform.rotation);
             obj.GetComponent<BombScript>().SetStatus(skillValue);
