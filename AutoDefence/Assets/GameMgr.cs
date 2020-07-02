@@ -221,7 +221,16 @@ public class GameMgr : MonoBehaviour
             }
         }
 
-        if(stageStart)
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            UpdateMoney(1);
+        }
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            baseObj.GetComponent<BaseScript>().DecreaseHP(-1);
+        }
+
+        if (stageStart)
         {
             checkCoolTime -= Time.deltaTime;
             if (checkCoolTime < 0f)
