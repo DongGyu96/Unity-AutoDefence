@@ -3414,6 +3414,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpBar: {fileID: 1083753978733545324, guid: c01549c981342654a912dcb699e7e649, type: 3}
   mpBar: {fileID: 5699031202455420797, guid: 03184e292436f3948bdddd44be5a2032, type: 3}
+  face: {fileID: 21300000, guid: 46d2bf8f83a47f642a51d6c922e6055a, type: 3}
   hp: 450
   speed: 25
   damage: 20
@@ -3426,13 +3427,14 @@ MonoBehaviour:
   shock: 1
   attackParticle: {fileID: 7089356874089007218, guid: ecd219312f5e2864088709c69c79c1ef,
     type: 3}
-  mp: 150
+  mp: 80
   skillType: 0
   skillEffect: {fileID: 7174821650685280654, guid: 2ed72f5704a4d124a9b40215d5340b3e,
     type: 3}
-  skillValue: 150
+  skillValue: 200
   skillDurationTime: 0.5
   skillObject: {fileID: 0}
+  skillTip: "\uC790\uC2E0\uC758 HP\uB97C 200 \uB9CC\uD07C \uD68C\uBCF5\uD569\uB2C8\uB2E4"
 --- !u!82 &6351654212350153582
 AudioSource:
   m_ObjectHideFlags: 0

@@ -24,6 +24,7 @@ public class DefenceUnit : MonoBehaviour
 {
     [SerializeField] private GameObject hpBar;
     [SerializeField] private GameObject mpBar;
+    [SerializeField] private Sprite face;
 
     [Header("Unit Status")]
     [SerializeField] private float hp;
@@ -48,6 +49,7 @@ public class DefenceUnit : MonoBehaviour
     [SerializeField] private float skillValue;
     [SerializeField] private float skillDurationTime;
     [SerializeField] private GameObject skillObject;
+    [SerializeField] private string skillTip;
     private bool activeSkillOn;
     private int activeSkillCount;
     private bool skillOn;
@@ -382,5 +384,46 @@ public class DefenceUnit : MonoBehaviour
     void PlaySound()
     {
         attackAudio.Play();
+    }
+
+    public float GetHP()
+    {
+        return hp;
+    }
+    public float GetRemainHP()
+    {
+        return remainHp;
+    }
+    public float GetMP()
+    {
+        return mp;
+    }
+    public float GetRemainMP()
+    {
+        return remainMp;
+    }
+    public float GetDamage()
+    {
+        return damage;
+    }
+    public float GetMoveSpeed()
+    {
+        return speed;
+    }
+    public float GetAttackSpeed()
+    {
+        return maxAttackCoolTime;
+    }
+    public float GetAttackDist()
+    {
+        return attackDist;
+    }
+    public string GetSkillInfo()
+    {
+        return skillTip;
+    }
+    public Sprite GetImage()
+    {
+        return face;
     }
 }

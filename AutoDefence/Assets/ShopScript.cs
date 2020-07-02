@@ -24,9 +24,12 @@ public class ShopScript : MonoBehaviour
 
     public void Refresh()
     {
-        for(int i = 0; i < 5; ++i)
+        if(GameMgr.Instance.UpdateMoney(-1))
         {
-            StuffScript[i].Refresh();
+            for (int i = 0; i < 5; ++i)
+            {
+                StuffScript[i].Refresh();
+            }
         }
     }
 }

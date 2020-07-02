@@ -686,6 +686,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpBar: {fileID: 1445597681672895662, guid: 8cc6291984f8da74ab36c6ad0f5e73aa, type: 3}
+  face: {fileID: 21300000, guid: 8d04d02395be2414eb219e3b9c05c507, type: 3}
+  tip: "\uAE30\uBCF8\uC801\uC73C\uB85C \uB4F1\uC7A5\uD558\uB294 \uC801 \uC624\uBE0C\uC81D\uD2B8"
   enemyType: 0
   hp: 125
   speed: 40

@@ -16,6 +16,8 @@ public class Enemy : MonoBehaviour
     private GameObject[] friendlyUnits;
     [SerializeField] private GameObject hpBar;
     // [SerializeField] private GameObject mpBar;
+    [SerializeField] private Sprite face;
+    [SerializeField] private string tip;
 
     [Header("Enemy Status")]
     [SerializeField] private ENEMY_TYPE enemyType = ENEMY_TYPE.NORMAL;
@@ -197,5 +199,46 @@ public class Enemy : MonoBehaviour
     void PlaySound()
     {
         attackAudio.Play();
+    }
+
+    public float GetHP()
+    {
+        return hp;
+    }
+    public float GetRemainHP()
+    {
+        return remainHp;
+    }
+    public float GetMP()
+    {
+        return 0;
+    }
+    public float GetRemainMP()
+    {
+        return 0;
+    }
+    public float GetDamage()
+    {
+        return damage;
+    }
+    public float GetMoveSpeed()
+    {
+        return speed;
+    }
+    public float GetAttackSpeed()
+    {
+        return maxAttackCoolTime;
+    }
+    public float GetAttackDist()
+    {
+        return attackDist;
+    }
+    public string GetSkillInfo()
+    {
+        return tip;
+    }
+    public Sprite GetImage()
+    {
+        return face;
     }
 }

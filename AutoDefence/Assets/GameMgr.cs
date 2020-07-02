@@ -15,6 +15,7 @@ public class GameMgr : MonoBehaviour
     [SerializeField] private Text moneyText;
     [SerializeField] private int money;
     [SerializeField] private GameObject shop;
+    [SerializeField] private GameObject objectInfo;
 
     [Header("InGame Object")]
     [SerializeField] private GameObject positionObject;
@@ -41,7 +42,7 @@ public class GameMgr : MonoBehaviour
 
             // 씬 전환이 되더라도 파괴되지 않게 한다.
             // gameObject만으로도 이 스크립트가 컴포넌트로서 붙어있는 Hierarchy상의 게임오브젝트라는 뜻이지만, 
-            // DontDestroyOnLoad(this.gameObject);
+            DontDestroyOnLoad(this.gameObject);
         }
         else
         {
@@ -99,8 +100,20 @@ public class GameMgr : MonoBehaviour
 
     void InitGame()
     {
-        moneyText.text = money.ToString();
+        UpdateMoney();
+        objectInfo.SetActive(false);
         checkCoolTime = MAX_CHECK_COOLTIME;
+    }
+
+    public bool UpdateMoney(int amount = 0)
+    {
+        if(money + amount >= 0)
+        {
+            money += amount;
+            moneyText.text = "Gold : " + money.ToString();
+            return true;
+        }
+        return false;
     }
 
     public void StartStage()
@@ -130,6 +143,9 @@ public class GameMgr : MonoBehaviour
     public void FinishStage()
     {
         GetComponent<AudioSource>().Play();
+
+        UpdateMoney(3);
+
         positionObject.SetActive(true);
 
         stageStart = false;
@@ -162,10 +178,16 @@ public class GameMgr : MonoBehaviour
         {
             if(defenceObject[i] == null)
             {
-                Vector3 vPos = positionObject.transform.GetChild(i).transform.position;
-                vPos.y += 5f;
-                defenceObject[i] = Instantiate(obj, vPos, Quaternion.identity);
-                return true;
+                if (money > 0)
+                {
+                    Vector3 vPos = positionObject.transform.GetChild(i).transform.position;
+                    vPos.y += 5f;
+                    defenceObject[i] = Instantiate(obj, vPos, Quaternion.identity);
+                    UpdateMoney(-1);
+                    return true;
+                }
+                else
+                    return false;
             }
         }
         return false;
@@ -180,6 +202,25 @@ public class GameMgr : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetMouseButtonDown(0))
+        {
+            GameObject obj = GetClickObject();
+            
+            if(obj.tag == "Friendly" || obj.tag == "Enemy")
+            {
+                if (!obj.Equals(objectInfo.GetComponent<InfoUIScript>().GetTarget()))
+                {
+                    objectInfo.SetActive(true);
+                    objectInfo.GetComponent<InfoUIScript>().SetTarget(obj);
+                }
+                else
+                {
+                    objectInfo.SetActive(false);
+                    objectInfo.GetComponent<InfoUIScript>().SetTarget(null);
+                }
+            }
+        }
+
         if(stageStart)
         {
             checkCoolTime -= Time.deltaTime;
@@ -199,6 +240,7 @@ public class GameMgr : MonoBehaviour
                 if(!drag)
                 {
                     GameObject obj = GetClickObject();
+
                     if (obj != null)
                     {
                         for (int i = 0; i < 12; ++i)
@@ -335,7 +377,6 @@ public class GameMgr : MonoBehaviour
         if(Physics.Raycast(ray.origin, ray.direction*10, out hit))
         {
             target = hit.collider.gameObject;
-            Debug.Log("Click" + target.name);
         }
         return target;
     }

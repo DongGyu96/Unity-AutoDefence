@@ -1424,6 +1424,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpBar: {fileID: 1083753978733545324, guid: c01549c981342654a912dcb699e7e649, type: 3}
   mpBar: {fileID: 5699031202455420797, guid: 03184e292436f3948bdddd44be5a2032, type: 3}
+  face: {fileID: 21300000, guid: 32f41add18f523b46a7977ee8d3d4184, type: 3}
   hp: 250
   speed: 25
   damage: 18
@@ -1443,6 +1444,7 @@ MonoBehaviour:
   skillValue: 3
   skillDurationTime: 2
   skillObject: {fileID: 0}
+  skillTip: "2\uCD08\uAC04 \uACF5\uACA9\uC18D\uB3C4\uAC00 3\uBC30 \uBE68\uB77C\uC9D1\uB2C8\uB2E4"
 --- !u!82 &-4600194432235350833
 AudioSource:
   m_ObjectHideFlags: 0

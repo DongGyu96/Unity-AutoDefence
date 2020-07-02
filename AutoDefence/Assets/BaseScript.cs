@@ -39,12 +39,16 @@ public class BaseScript : MonoBehaviour
 
     public void DecreaseHP(int amount = 1)
     {
-        hp -= 10;
+        hp -= amount;
         hpText.text = "HP : " + hp.ToString();
         if(hp < 0)
         {
-            GameMgr.Instance.DestoryAll();
-            SceneManager.LoadScene("TitleScene");
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
+
         }
     }
 

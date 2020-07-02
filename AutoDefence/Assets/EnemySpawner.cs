@@ -71,7 +71,7 @@ public class EnemySpawner : MonoBehaviour
 
         while (test)
         {
-            if((count + 1) % 10 == 0)
+            if((count + 1) % 5 == 0)
             {
                 Instantiate(boss, new Vector3(0f + (20f * 2), 5f, 300f), Quaternion.identity);
             }

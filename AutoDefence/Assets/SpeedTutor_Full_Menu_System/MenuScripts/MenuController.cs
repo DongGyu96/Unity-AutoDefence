@@ -134,8 +134,11 @@ namespace SpeedTutorMainMenuSystem
 
             if (buttonType == "Exit")
             {
-                Debug.Log("YES QUIT!");
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#else
                 Application.Quit();
+#endif
             }
 
             if (buttonType == "Options")

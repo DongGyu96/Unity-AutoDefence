@@ -487,7 +487,7 @@ PrefabInstance:
     - target: {fileID: 668911713139052817, guid: 2ff75f1eb6e08274f9d6f54c52edce2c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -360
+      value: -422
       objectReference: {fileID: 0}
     - target: {fileID: 668911713139052817, guid: 2ff75f1eb6e08274f9d6f54c52edce2c,
         type: 3}
@@ -497,7 +497,7 @@ PrefabInstance:
     - target: {fileID: 669013583736035893, guid: 2ff75f1eb6e08274f9d6f54c52edce2c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -165.04999
+      value: -199
       objectReference: {fileID: 0}
     - target: {fileID: 669013583736035893, guid: 2ff75f1eb6e08274f9d6f54c52edce2c,
         type: 3}
@@ -568,6 +568,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UIController
+      objectReference: {fileID: 0}
+    - target: {fileID: 743643238894855095, guid: 2ff75f1eb6e08274f9d6f54c52edce2c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 744083877799909573, guid: 2ff75f1eb6e08274f9d6f54c52edce2c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 744815770996387441, guid: 2ff75f1eb6e08274f9d6f54c52edce2c,
         type: 3}
